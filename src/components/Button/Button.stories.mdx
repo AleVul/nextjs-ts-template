@@ -1,0 +1,19 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import Button from "./Button";
+
+<Meta title="MDX/Button" component={Button} />
+
+# This is MDX documentation for Button component
+
+<Preview>
+  <Story name="With text">
+    <Button>Hello Button</Button>
+  </Story>
+  <Story name="With emoji">
+    <Button>
+      <span role="img" aria-label="so cool">
+        😀 😎 👍 💯
+      </span>
+    </Button>
+  </Story>
+</Preview>
