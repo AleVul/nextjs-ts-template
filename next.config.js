@@ -6,11 +6,9 @@
  * More info about this in github page of next-optimized-images.
  */
 
-const withPlugins = require("next-compose-plugins");
+const { PHASE_PRODUCTION_BUILD } = require("next/constants");
+const { withPlugins, optional } = require("next-compose-plugins");
 const optimizedImages = require("next-optimized-images");
-const bundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
 
 /**
  * Custom nextjs config.
@@ -35,7 +33,15 @@ module.exports = withPlugins([
     },
   ],
 
-  [bundleAnalyzer, {}],
+  [
+    optional(() =>
+      require("@next/bundle-analyzer")({
+        enabled: process.env.ANALYZE === "true",
+      })
+    ),
+    {},
+    [PHASE_PRODUCTION_BUILD],
+  ],
 
   // this must be last in the array.
   nextConfig,
