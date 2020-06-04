@@ -1,0 +1,59 @@
+# a template for gitlab ci/cd, if you dont use gitlab
+# then you can safely delete this file.
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  TAG: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+
+test:
+  stage: test
+  image:
+    name: node:12.16-alpine
+  cache:
+    paths:
+      - node_modules/
+    key:
+      files:
+        - package.json
+  only:
+    - merge_requests
+  script:
+    - yarn --production=false --network-concurrency 1
+    - yarn test
+
+build:
+  stage: build
+  image:
+    name: node:12.16-alpine
+  cache:
+    paths:
+      - node_modules/
+    key:
+      files:
+        - package.json
+  only:
+    - tags
+  before_script:
+    - apk add build-base python-dev py-pip jpeg-dev zlib-dev git python make g++ # for image optimization dependency and ssh
+  script:
+    - yarn --production=false --network-concurrency 1
+    - yarn build
+    - yarn # this will remove dev deps
+  artifacts:
+    paths:
+      - .next
+      - node_modules
+    expire_in: 1 week
+
+deploy:
+  stage: deploy
+  only:
+    - tags
+  dependencies:
+    - build
+  script:
+    - docker build -t $TAG -f docker/Dockerfile .
