@@ -8,7 +8,8 @@
     "analyze": "ANALYZE=true yarn build",
     "storybook": "start-storybook",
     "lint": "eslint -c .eslintrc.yml --max-warnings 0 ./src --ext .ts,.tsx",
-    "test": "jest"
+    "test": "jest",
+    "sw:generate": "workbox generateSW configs/workbox-config.js"
   },
   "dependencies": {
     "imagemin-mozjpeg": "^9.0.0",

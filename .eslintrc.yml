@@ -1,5 +1,4 @@
 ---
-
 root: true
 parser: "@typescript-eslint/parser"
 parserOptions:
@@ -8,7 +7,8 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 
-plugins: ["@typescript-eslint", "react", "react-hooks", "jest", "testing-library"]
+plugins:
+  ["@typescript-eslint", "react", "react-hooks", "jest", "testing-library"]
 
 env:
   es6: true
@@ -36,4 +36,4 @@ rules:
   "react/prop-types": 0
   "@typescript-eslint/explicit-module-boundary-types": 0
 
-ignorePatterns: ["next.config.js"]
+ignorePatterns: ["next.config.js", "public/sw.js", "public/workbox*"]

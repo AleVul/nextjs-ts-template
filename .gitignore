@@ -42,3 +42,8 @@ jspm_packages
 !.yarn/cache
 !.yarn/releases
 !.yarn/plugins
+
+# workbox stuff, these should
+# be generates at each build
+public/sw*
+public/workbox*
